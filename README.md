@@ -4,4 +4,4 @@ This is my project on digit recognition. You draw a digit and pytorch model will
 
 Work on site interface is in progress.
 
-[Link](https://digits-draw-predict.herokuapp.com/)
+[Link](https://draw-digit-predict.herokuapp.com/)
