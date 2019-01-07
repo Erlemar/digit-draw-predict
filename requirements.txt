@@ -2,7 +2,7 @@ boto3
 boto
 Flask==1.02
 Flask-Cors==3.0.2
-gunicorn==19.0.0
+gunicorn==19.9.0
 Jinja2==2.9.4
 numexpr==2.6.2
 numpy==1.15.4
@@ -13,7 +13,7 @@ requests-file==1.4.1
 requests-oauthlib==0.6.1
 scikit-image
 scipy
-torch=1.0.0
+torch==1.0.0
 torchvision
 matplotlib
 opencv-python
