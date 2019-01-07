@@ -35,7 +35,7 @@ class Model(object):
         # self.params_original = np.load('models/original_weights.npy')[()]
         # self.params = self.load_weights_amazon('updated_weights.npy')
         model_conv = Net()
-        checkpoint = torch.load('models/model1.pt')
+        checkpoint = torch.load('models/model1.pt', map_location='cpu')
         # epoch = checkpoint['epoch']
         # state_dict = checkpoint['state_dict']
         # optimizer = checkpoint['optimizer']
