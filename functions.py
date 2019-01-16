@@ -27,7 +27,7 @@ class Model(object):
         """
 
         model_conv = Net()
-        checkpoint = torch.load('models/model1.pt', map_location='cpu')
+        checkpoint = torch.load('models/model.pt', map_location='cpu')
         model_conv.load_state_dict(checkpoint['state_dict'])
         model_conv.eval()
         optimizer = optim.SGD(model_conv.parameters(), lr=0.1, momentum=0.9)
@@ -52,7 +52,7 @@ class Model(object):
             bbox = Image.eval(self.img, lambda px: 255 - px).getbbox()
         else:
             x, y, w, h = bbox
-            bbox = (x, y, x + w, y + h)
+            bbox = (x - 1, y - 1, x + w, y + h)
         image = self.img.crop(bbox)
 
         path = 'static/small_digit' + str(uuid.uuid1()) + '.jpg'
@@ -123,7 +123,7 @@ class Model(object):
         # Create a Rectangle patch
         for i, rect in enumerate(self.rects):
             x, y, w, h = rect
-            rect = (x, y, x + w, y + h)
+            rect = (x - 1, y - 1, x + w, y + h)
 
             rect_ = patches.Rectangle((rect[0], rect[1]), rect[2] - rect[0], rect[3] - rect[1], linewidth=2,
                                       edgecolor='red', facecolor='none')
