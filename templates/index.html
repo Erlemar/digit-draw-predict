@@ -68,10 +68,24 @@
             <div class="col-md-7">
 				<div class="row" id="pr">
 					<div class="col-md-8"><span id="pred_text">Prediction result:</span> <span id="rec_result"> </span></div>
-					<img id="image1" alt="image" style="display: none;">
+					<div class="col-md-8"><img id="image1" alt="image" style="display: none;" width="95%"></div>
 				</div>
 				<div class="container" id="hidable" style="display: none;">
 				</div>
+                <div class="col-md-6">
+                    <table class="table" id="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Top-1 pred</th>
+                                <th>Top-2 pred</th>
+                                <th>Top-3 pred</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
 
 
             </div>
@@ -90,14 +104,15 @@
             </div>
             <div class="col-md-4">
                 <h2>Tracking information (in development)</h2>
-                <span>Number of predictions:</span> <span id="clicks"> </span>
+                <span>Number of predictions:</span> <span id="clicks"> </span><br>
+                <span>Number of predictions in the session:</span> <span id="pred_count"> </span>
             </div>
         </div>
 
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-recognize">Github</a></p>
+                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-predict">Github</a></p>
                 </div>
             </div>
         </footer>

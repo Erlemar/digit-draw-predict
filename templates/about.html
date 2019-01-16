@@ -53,13 +53,29 @@
     </nav>
 
 	    <div class="container">	 
-			To be done
-
+			<div class="col-md-4"><h2>1. Motivation</h2>
+				I have completed the <a href="https://digits-draw-recognize.herokuapp.com/" target="_blank">first version of this project</a> in summer 2017 and since then wanted to create a better version. There were several possible improvements in my mind: using other frameworks, recognition of several digits and separating non-digits. Alas, I lacked skills and free time to do this. Finally at the end of 2018 an opportunity appeared: I was taking part in a Pytorch challenge course from Udacity and could do a side project. This app is that side project. It works using Pytorch and cv2.
+			</div>
+			<div class="col-md-4"><h2>2. Development</h2>
+				It was possible to use the old version of the app and make changes to it. Thanks to the app I had more than 6000 handwritten images collected, but I had to check their labels and make corrections when necessary. After this is was necessary to choose an approach to digit detection and separation of digits and non-digits. I have tried several approaches including SVM for classifying object into digits and non-digits. I contemplated using siamese networks for this and yolo for digit detection, but in the end it turned out that simpler approaches work good enough.
+			</div>
+			<div class="col-md-4"><h2>Model training</h2>
+				<img src = "/static/2.jpg" alt = "Model training" style="border: 1px solid #000000" width="95%"> </img>
+			</div>
+			<div class="col-md-4"><h2>3. Pytorch and cv2</h2>
+				My final solution looks like this: cv2 for image detection and CNN in Pytorch on 11 classes to make predictions. At first I use cv2 to find separate contours on the image and to draw bounding rectangles on them. This way I can separate all drawn object on the image and work with each of them. I have trained a CNN with 2 convolutional layers on 11 classes (10 digits and "other") with SGD optimizer and CosineAnnealingLR. It was somewhat tricky to train considering number of samples in "other" category was quite low. Still I achieved accuracy of ~89% on validation data.
+			</div>
+			<div class="col-md-4"><h2>4. Other things</h2>
+				I contemplated adding a possibility of training model on additional data, but dropped this idea - training on several digits could lead to overfitting. Maybe I'll retrain model manually once per month on newly acquired samples. One fun feature was added - showing number of predictions made since the app is active. Sadly apps on Heroku on free plan go to sleep after 30 minutes of inactivity.
+			</div>
+			<div class="col-md-4"><h2>Confusion matrix for validation</h2>
+				<img src = "/static/3.jpg" alt = "Confusion matrix" style="border: 1px solid #000000" width="95%"> </img>
+			</div>
 
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-recognize">Github</a></p>
+                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-predict">Github</a></p>
                 </div>
             </div>
         </footer>

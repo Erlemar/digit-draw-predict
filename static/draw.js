@@ -212,13 +212,15 @@ function clearCanvas() {
     context.clearRect (0, 0, 200, 200);
     draw();
     document.getElementById("rec_result").innerHTML = "";
+    document.getElementById("image1").style.display = "none";
+    $("#table").find("tr:not(:first)").remove();
 }
 
 
 function predict() {
     clicks += 1;
     document.getElementById("clicks").innerHTML = clicks;
-	document.getElementById("rec_result").innerHTML = "Predicting...";
+	// document.getElementById("rec_result").innerHTML = "Predicting...";
 
 	var canvas = document.getElementById("the_stage");
 	var dataURL = canvas.toDataURL('image/jpg');
@@ -230,52 +232,77 @@ function predict() {
 			imageBase64: dataURL
 		}
 	}).done(function(response) {
-		console.log(response)
+		// console.log(response)
 		if (response == "Can't predict, when nothing is drawn") {
 
 			document.getElementById("rec_result").innerHTML = response;
 		} else {
-			//answers = response
 
 			var response = JSON.parse(response)
-			//answer, top_3, top_3_original, top_3_cnn, top_3_cnn_original
+			document.getElementById("pred_count").innerHTML = response["counter"]
+
 			document.getElementById("image1").style.display = "block";
 			document.getElementById("image1").src = response['image'];
 
-			document.getElementById("rec_result").innerHTML = response["answer"];
+            // clear table
+			$("#table").find("tr:not(:first)").remove();
+
+			// automatically add rows for showing predictions
+            mybody = document.getElementsByTagName("body")[0];
+            mytable = mybody.getElementsByTagName("table")[0];
+            mytablebody = mytable.getElementsByTagName("tbody")[0];
+
+            for(var j = 0; j < Object.keys(response['small_images']).length; j++) {
+                mycurrent_row = document.createElement("tr");
+
+                var DOM_img = document.createElement("img");
+                DOM_img.src = response['small_images'][j];
+
+                mycurrent_row.appendChild(DOM_img);
+                mycurrent_cell = document.createElement("td");
+                mycurrent_cell.appendChild(document.createTextNode(response['small_predictions'][j][0]));
+                mycurrent_row.appendChild(mycurrent_cell);
+                mycurrent_cell = document.createElement("td");
+                mycurrent_cell.appendChild(document.createTextNode(response['small_predictions'][j][1]));
+                mycurrent_row.appendChild(mycurrent_cell);
+                mycurrent_cell = document.createElement("td");
+                mycurrent_cell.appendChild(document.createTextNode(response['small_predictions'][j][2]));
+                mycurrent_row.appendChild(mycurrent_cell);
+                mytablebody.appendChild(mycurrent_row);
+            }
 		}
 	});
 }
 
-function submit_correct_digit()
-{
-	var digit = document.getElementById("digits");
-	var correct_digit = digit.options[digit.selectedIndex].text
-	document.getElementById("digit_form").style.display = "none";
-	document.getElementById("answer_reaction").innerHTML = "Thank you! The models should work better now.";
-	
-	var trained = train_model(correct_digit);
-	console.log(trained)
-
-}
-
-function train_model(digit) {
-	var digit = digit;
-	var canvas = document.getElementById("the_stage");
-	var dataURL = canvas.toDataURL('image/jpg');
-	document.getElementById("rec_result").innerHTML = 'Training...'
-	$.ajax({
-		type: "POST",
-		url: "/hook3",
-		data:{
-			digit: digit,
-			imageBase64: dataURL
-		}
-	}).done(function(response) {
-	  console.log(response)
-	  document.getElementById("rec_result").innerHTML = response
-	});
-}
+//function submit_correct_digit()
+//{
+//	var digit = document.getElementById("digits");
+//	var correct_digit = digit.options[digit.selectedIndex].text
+//	document.getElementById("digit_form").style.display = "none";
+//	document.getElementById("answer_reaction").innerHTML = "Thank you! The models should work better now.";
+//
+//	var trained = train_model(correct_digit);
+//	console.log(trained)
+//
+//}
+//
+//function train_model(digit) {
+//	var digit = digit;
+//	var canvas = document.getElementById("the_stage");
+//	var dataURL = canvas.toDataURL('image/jpg');
+//	document.getElementById("rec_result").innerHTML = 'Training...'
+//	$.ajax({
+//		type: "POST",
+//		url: "/hook3",
+//		data:{
+//			digit: digit,
+//			imageBase64: dataURL
+//		}
+//	}).done(function(response) {
+//	  console.log(response)
+//	  document.getElementById("rec_result").innerHTML = response
+//	});
+//}
 
 
 onload = start_canvas;

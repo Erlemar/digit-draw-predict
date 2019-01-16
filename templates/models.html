@@ -52,18 +52,47 @@
         </div>
     </nav>
 
-    <div class="container">
-
-
+    <div class="container" class="col-md-7">
             <div>
-			To be done
-					</div>
+                <h1>Model used in the project</h1>
+                <p>This project uses one CNN model written on Pytorch. It was inspired by Pytorch challenge by Udacity and Facebook. Model was trained on ~6000 images, which were gathered thanks to the previous version of the project.</p>
+
+                <h2>Convolutional neural net</h2>
+                <p>The structure of model is simple: </p>
+                <img src = "/static/9.jpg" alt = "FNN architecture"> </img><br>
+
+                <script src="https://gist.github.com/Erlemar/880c6366816374012554e3167459f30d.js"></script>
+
+                <h3>Code explanation</h3>
+
+                <ul>
+                    <li>At first it is necessary to create a Dataset class. Digits are loaded from folders with relevant names and cropped with bounding boxes. I made sure that each image contains only one digit. Non-digits are in a separate folder called "other1". The number of these digits is quite low, so I use oversampling;</li>
+                    <li>I resize data to 32x32 and use some augmentations - random flips and rotations;</li>
+                    <li>It is necessary to ohe-hot encode labels;</li>
+                    <li>Considering low number of non-digits I decided to use weights in the loss. Each sample gain a weight equal to length of dataset divided by number of images with its label;</li>
+                    <li>Model has an output without activations because BCEWithLogitsLoss is used;</li>
+                    <li>Optimizer is SGD and CosineAnnealingLR is used as a scheduler;</li>
+                    <li>While training I use early stopping based on validation loss - if it doesn't decrease for 15 epochs, then training is stopped and best model is loaded;</li>
+                    <li>Model is saved with optimizer state, training statistics are also saved for plotting if necessary later;</li>
+
+                <h3>Model's training and accuracy</h3>
+                <p>I have tried using various values for parameters, adding or dropping layers and changing layers' and weights' shape. You can see the final version in the code above.</p>
+
+                <p>The process of training the final model looked like this:</p><br>
+
+
+                <iframe width="800" height="600" frameborder="0" scrolling="no" src="//plot.ly/~Artgor/40.embed?showlink=false"></iframe>
+                <iframe width="800" height="600" frameborder="0" scrolling="no" src="//plot.ly/~Artgor/42.embed?showlink=false"></iframe>
+
+                <p>This confusion matrix shows quality of predictions on validation data.</p>
+                <img src = "/static/3.jpg" alt = "CNN MNIST confusion matrix" > </img><br>
+
         <hr>
 
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-recognize">Github</a></p>
+                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-predict">Github</a></p>
                 </div>
             </div>
         </footer>

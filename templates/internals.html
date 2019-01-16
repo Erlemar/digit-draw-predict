@@ -55,23 +55,29 @@
     <div class="container">
 
 
-            <div>
 				<h1>Project description</h1>
-				<p>To be done.</p>
+				<p>The general workflow is the following: user draws a digit and presses the button "Predict". Javascript encodes image into 64 bit encoded JPG URL, which is passed into Python. Image is decoded and processed by cv2, which tries to find separate objects in the image. Then model makes predictions for each object. These predictions are passed back into Javascript and it shows them on the page. </p>
 
+				<h2>Drawing the digits</h2>
+				<p>Functions to draw on canvas are defined in <a href="https://github.com/Erlemar/digit-draw-predict/blob/master/static/draw.js">draw.js</a>. It is possible to draw with mouse on PC and with touches on mobile devices. Button "Clear" clears the canvas and hides unnecessary elements of interface. Pressing button "Predict" sends the data to python script (64 bit encoded JPG URL) with ajax request.</p>
+
+				<h2>Receiving the encoded image and predicting labels</h2>
+				<p>The encoded image is passed into <a href="https://github.com/Erlemar/digit-draw-predict/blob/master/main.py">main.py</a>. It is decoded and is sent to  <a href="https://github.com/Erlemar/digit-draw-predict/blob/master/functions.py">functions.py</a>. Weights of CNN are loaded when the app is initialized, so predictions can be done quickly. The weights are kept in the app on Heroky.
+				Then the image is processed:</p>
+				<ul>
+					<li>cv2 is used to find separate contours = objects in image;</li>
+					<li>cv2 is used again to draw rectangles around each object;</li>
+                    <li>Image is cut into separate images by rectanges;</li>
+					<li>Each image is converted into Pytorch tensor with shape (1, 3, 32, 32);</li>
+				</ul>
+				<p>After this CNN model makes prediction for each object, the result is either a number or '-' for non-digits.</p>
             </div>
- 
-
-        <hr>
-
-
-
-
+         <hr>
 
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-recognize">Github</a></p>
+                    <p>Copyright &copy; <a href="https://github.com/Erlemar/digit-draw-predict">Github</a></p>
                 </div>
             </div>
         </footer>
