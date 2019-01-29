@@ -19,6 +19,10 @@ function startup() {
 //canvas functions
 function start_canvas () {
     var canvas = document.getElementById("the_stage");
+    canvas.addEventListener("touchstart",  function(event) {event.preventDefault()})
+    canvas.addEventListener("touchmove",   function(event) {event.preventDefault()})
+    canvas.addEventListener("touchend",    function(event) {event.preventDefault()})
+    canvas.addEventListener("touchcancel", function(event) {event.preventDefault()})
     context = canvas.getContext("2d");
     canvas.onmousedown = function (event) {mousedown(event)};
     canvas.onmousemove = function (event) {mousemove(event)};
