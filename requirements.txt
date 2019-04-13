@@ -3,7 +3,7 @@ boto
 Flask==1.0.2
 Flask-Cors==3.0.2
 gunicorn==19.9.0
-Jinja2==2.9.4
+Jinja2
 numexpr==2.6.2
 numpy==1.15.4
 oauthlib==1.0.3
